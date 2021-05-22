@@ -23,22 +23,22 @@ typedef struct Vector
 {
     _Node *first;
     _Node *last;
-    u_int32_t size;
+    unsigned int size;
 } Vector;
 
 typedef struct SortedVector
 {
     _DNode *first;
     _DNode *last;
-    u_int32_t size;
+    unsigned int size;
 } SortedVector;
 
-typedef struct Vector3
+typedef struct Vec3
 {
     float x;
     float y;
     float z;
-} Vector3;
+} Vec3;
 
 typedef struct Point
 {
@@ -77,44 +77,44 @@ float SV_get(SortedVector *v, int index);
 /* Removes the Node of a specific index*/
 SortedVector *SV_remove(SortedVector *v, int index);
 
-/* Creates and assignes a new Vector3 struct and returns it*/
-Vector3 *newVector3(float x, float y, float z);
+/* Creates and assignes a new Vec3 struct and returns it*/
+Vec3 *newVec3(float x, float y, float z);
 
-/* assignes values to a Vector3 struct and returns it*/
-Vector3 *V3_assign(Vector3 *v, float x, float y, float z);
+/* assignes values to a Vec3 struct and returns it*/
+Vec3 *V3_assign(Vec3 *v, float x, float y, float z);
 
-/* dots the 2 Vector3s and returns the result */
-float V3_dotProduct(const Vector3 *v1, const Vector3 *v2);
+/* dots the 2 Vec3s and returns the result */
+float V3_dotProduct(const Vec3 *v1, const Vec3 *v2);
 
-/* crosses the 2 Vector3s and returns the resultant Vector3 */
-Vector3 *V3_crossProduct(const Vector3 *v1, const Vector3 *v2);
+/* crosses the 2 Vec3s and returns the resultant Vec3 */
+Vec3 *V3_crossProduct(const Vec3 *v1, const Vec3 *v2);
 
-/* multiplies the Vector3 by a factor and returns the result */
-Vector3 *V3_multiply(Vector3 *v, float factor);
+/* multiplies the Vec3 by a factor and returns the result */
+Vec3 *V3_multiply(Vec3 *v, float factor);
 
-/* divides the Vector3 by a factor and returns the result */
-Vector3 *V3_divide(Vector3 *v, float factor);
+/* divides the Vec3 by a factor and returns the result */
+Vec3 *V3_divide(Vec3 *v, float factor);
 
-/* divides the Vector3 by a factor and returns the result */
-Vector3 *QV3_divide(Vector3 *v, float factor);
+/* divides the Vec3 by a factor and returns the result */
+Vec3 *QV3_divide(Vec3 *v, float factor);
 
-/* calculates the magnitude of a Vector3 and returns the result */
-float V3_magnitude(const Vector3 *v);
+/* calculates the magnitude of a Vec3 and returns the result */
+float V3_magnitude(const Vec3 *v);
 
-/* quickly calculates the magnitude of a Vector3 and returns the result at the cost of an error margin */
-float QV3_magnitude(const Vector3 *v);
+/* quickly calculates the magnitude of a Vec3 and returns the result at the cost of an error margin */
+float QV3_magnitude(const Vec3 *v);
 
-/* negates the Vector3 and returns the resultant Vector3 */
-Vector3 *V3_negate(const Vector3 *v);
+/* negates the Vec3 and returns the resultant Vec3 */
+Vec3 *V3_negate(const Vec3 *v);
 
-/* normalizes the Vector3 and returns the resultant Vector3 */
-Vector3 *V3_normalize(const Vector3 *v);
+/* normalizes the Vec3 and returns the resultant Vec3 */
+Vec3 *V3_normalize(const Vec3 *v);
 
-/* quickly normalizes the Vector3 and returns the resultant Vector3 at the cost of an error margin */
-Vector3 *QV3_normalize(const Vector3 *v);
+/* quickly normalizes the Vec3 and returns the resultant Vec3 at the cost of an error margin */
+Vec3 *QV3_normalize(const Vec3 *v);
 
-/* get the angle btween 2 Vector3s */
-float V3_angleBetween(const Vector3 *a, const Vector3 *b);
+/* get the angle btween 2 Vec3s */
+float V3_angleBetween(const Vec3 *a, const Vec3 *b);
 
 /* Get the angle made with the x axis */
 float V3_angleX();
@@ -126,7 +126,7 @@ float V3_angleY();
 float V3_angleZ();
 
 /* returns a string to display a vector with*/
-void *displayVector3();
+void *displayVec3();
 
 /* Creates and assignes a new Point struct and returns it*/
 Point *newPoint(float x, float y, float z);
@@ -135,10 +135,10 @@ Point *newPoint(float x, float y, float z);
 Point *P_assign(Point *p, float x, float y, float z);
 
 /* Subtracts 2 points and returnes the result*/
-Vector3 *P_subtractDontSave(const Point *a, const Point *b);
+Vec3 *P_subtractDontSave(const Point *a, const Point *b);
 
 /* Adds 2 Subtracts and stores the result in the specified Point* */
-Vector3 *P_subtractSave(const Point *a, const Point *b, Vector3 *saveLocation);
+Vec3 *P_subtractSave(const Point *a, const Point *b, Vec3 *saveLocation);
 
 #define subtract(...) OVERLOAD(subtract, (__VA_ARGS__),              \
                                (P_subtractDontSave, (Point, Point)), \
@@ -260,7 +260,7 @@ float V_get(Vector *v, int index)
 
     _Node *curr = v->first;
 
-    for (u_int32_t i = 0; i < v->size; i++)
+    for (unsigned int i = 0; i < v->size; i++)
     {
         if (i != index)
         {
@@ -293,7 +293,7 @@ Vector *V_remove(Vector *v, int index)
     _Node *curr;
     _Node *prev;
 
-    for (u_int32_t i = 0; i < v->size; i++)
+    for (unsigned int i = 0; i < v->size; i++)
     {
         if (i == 0)
         {
@@ -399,7 +399,7 @@ float SV_get(SortedVector *v, int index)
 
     _DNode *curr = v->first;
 
-    for (u_int32_t i = 0; i < v->size; i++)
+    for (unsigned int i = 0; i < v->size; i++)
     {
         if (i != index)
         {
@@ -429,7 +429,7 @@ SortedVector *SV_remove(SortedVector *v, int index)
     _DNode *prev;
     _DNode *curr;
 
-    for (u_int32_t i = 0; i < v->size; i++)
+    for (unsigned int i = 0; i < v->size; i++)
     {
         if (i == 0)
         {
@@ -461,9 +461,9 @@ SortedVector *SV_remove(SortedVector *v, int index)
     }
 }
 
-Vector3 *newVector3(float x, float y, float z)
+Vec3 *newVec3(float x, float y, float z)
 {
-    Vector3 *v = malloc(sizeof(Vector3));
+    Vec3 *v = malloc(sizeof(Vec3));
 
     v->x = x;
     v->y = y;
@@ -472,7 +472,7 @@ Vector3 *newVector3(float x, float y, float z)
     return v;
 }
 
-Vector3 *V3_assign(Vector3 *v, float x, float y, float z)
+Vec3 *V3_assign(Vec3 *v, float x, float y, float z)
 {
     v->x = x;
     v->y = y;
@@ -481,17 +481,17 @@ Vector3 *V3_assign(Vector3 *v, float x, float y, float z)
     return v;
 }
 
-float V3_dotProduct(const Vector3 *v1, const Vector3 *v2)
+float V3_dotProduct(const Vec3 *v1, const Vec3 *v2)
 {
     return (v1->x * v2->x) + (v1->y * v2->y) + (v1->z * v2->z);
 }
 
-Vector3 *V3_crossProduct(const Vector3 *v1, const Vector3 *v2)
+Vec3 *V3_crossProduct(const Vec3 *v1, const Vec3 *v2)
 {
-    return newVector3((v1->y * v2->z) - (v1->z * v2->y), (v1->z * v2->x) - (v1->x * v2->z), (v1->x * v2->y) - (v1->y * v2->x));
+    return newVec3((v1->y * v2->z) - (v1->z * v2->y), (v1->z * v2->x) - (v1->x * v2->z), (v1->x * v2->y) - (v1->y * v2->x));
 }
 
-Vector3 *V3_multiply(Vector3 *v, float factor)
+Vec3 *V3_multiply(Vec3 *v, float factor)
 {
     v->x *= factor;
     v->y *= factor;
@@ -499,7 +499,7 @@ Vector3 *V3_multiply(Vector3 *v, float factor)
     return v;
 }
 
-Vector3 *V3_divide(Vector3 *v, float factor)
+Vec3 *V3_divide(Vec3 *v, float factor)
 {
     v->x /= factor;
     v->y /= factor;
@@ -507,7 +507,7 @@ Vector3 *V3_divide(Vector3 *v, float factor)
     return v;
 }
 
-Vector3 *QV3_divide(Vector3 *v, float factor)
+Vec3 *QV3_divide(Vec3 *v, float factor)
 {
 
     float invFactor = Q_inverse(factor);
@@ -519,13 +519,13 @@ Vector3 *QV3_divide(Vector3 *v, float factor)
     return v;
 }
 
-float V3_magnitude(const Vector3 *v)
+float V3_magnitude(const Vec3 *v)
 {
 
     return sqrt((v->x * v->x) + (v->y * v->y) + (v->z * v->z));
 }
 
-float QV3_magnitude(const Vector3 *v)
+float QV3_magnitude(const Vec3 *v)
 {
     long i;
     float x2, y;
@@ -545,22 +545,22 @@ float QV3_magnitude(const Vector3 *v)
     return y;
 }
 
-Vector3 *V3_negate(const Vector3 *v)
+Vec3 *V3_negate(const Vec3 *v)
 {
     return V3_multiply(v, -1);
 }
 
-Vector3 *V3_normalize(const Vector3 *v)
+Vec3 *V3_normalize(const Vec3 *v)
 {
     return V3_divide(v, V3_magnitude(v));
 }
 
-Vector3 *QV3_normalize(const Vector3 *v)
+Vec3 *QV3_normalize(const Vec3 *v)
 {
     return QV3_divide(v, QV3_magnitude(v));
 }
 
-float V3_angleBetween(const Vector3 *a, const Vector3 *b)
+float V3_angleBetween(const Vec3 *a, const Vec3 *b)
 {
     float dot = V3_dotProduct(a, b);
 
@@ -571,17 +571,17 @@ float V3_angleBetween(const Vector3 *a, const Vector3 *b)
     return angle;
 }
 
-float V3_angleX(const Vector3 *v)
+float V3_angleX(const Vec3 *v)
 {
     return acos(v->x / V3_magnitude(v));
 }
 
-float V3_angleY(const Vector3 *v)
+float V3_angleY(const Vec3 *v)
 {
     return acos(v->y / V3_magnitude(v));
 }
 
-float V3_angleZ(const Vector3 *v)
+float V3_angleZ(const Vec3 *v)
 {
     return acos(v->z / V3_magnitude(v));
 }
@@ -606,9 +606,9 @@ Point *P_assign(Point *p, float x, float y, float z)
     return p;
 }
 
-Vector3 *P_subtractDontSave(const Point *a, const Point *b)
+Vec3 *P_subtractDontSave(const Point *a, const Point *b)
 {
-    Vector3 *v = malloc(sizeof(Vector3));
+    Vec3 *v = malloc(sizeof(Vec3));
 
     v->x = a->x - b->x;
     v->y = a->y - b->y;
@@ -617,7 +617,7 @@ Vector3 *P_subtractDontSave(const Point *a, const Point *b)
     return v;
 }
 
-Vector3 *P_subtractSave(const Point *a, const Point *b, Vector3 *saveLocation)
+Vec3 *P_subtractSave(const Point *a, const Point *b, Vec3 *saveLocation)
 {
     saveLocation->x = a->x - b->x;
     saveLocation->y = a->y - b->y;
@@ -667,9 +667,9 @@ float Q_rsqrt(float number)
     return Q_inverse(Q_sqrt(number));
 }
 
-void *displayVector3()
+void *displayVec3()
 {
-    return "Vector3 is: < %f, %f, %f >";
+    return "Vec3 is: < %f, %f, %f >";
 }
 
 #endif
