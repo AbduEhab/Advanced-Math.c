@@ -9,28 +9,28 @@
 typedef struct _Node
 {
     float f_value;
-    void *next;
+    struct _Node *next;
 } _Node;
 
 typedef struct _DNode
 {
     float f_value;
-    void *next;
-    void *prev;
-} _DNode;
+    struct _DNode *next;
+    struct _DNode *prev;
+};
 
 typedef struct Vector
 {
-    _Node *first;
-    _Node *last;
-    u_int32_t size;
+    struct _Node *first;
+    struct _Node *last;
+    unsigned char size;
 } Vector;
 
 typedef struct SortedVector
 {
-    _DNode *first;
-    _DNode *last;
-    u_int32_t size;
+    struct _DNode *first;
+    struct _DNode *last;
+    unsigned char size;
 } SortedVector;
 
 typedef struct Vector3
@@ -157,21 +157,23 @@ float Q_rsqrt(float number);
 
 Vector *newVector(float value)
 {
-    _Node *n = malloc(sizeof(_Node));
+    _Node *n = (_Node *)malloc(sizeof(_Node));
 
     n->f_value = value;
     n->next = NULL;
 
-    Vector *v = malloc(sizeof(Vector));
+    Vector *v = (Vector *)malloc(sizeof(Vector));
 
     v->first = n;
     v->last = n;
     v->size = 1;
+
+    return v;
 }
 
 Vector *V_addFirst(Vector *v, float value)
 {
-    _Node *n = malloc(sizeof(_Node));
+    _Node *n = (_Node *)malloc(sizeof(_Node));
 
     n->f_value = value;
     n->next = v->first;
@@ -195,7 +197,7 @@ Vector *V_add(Vector *v, float value, int index)
 
     v->size++;
 
-    _Node *n = malloc(sizeof(_Node));
+    _Node *n = (_Node *)malloc(sizeof(_Node));
 
     n->f_value = value;
     n->next = NULL;
@@ -234,7 +236,7 @@ Vector *V_add(Vector *v, float value, int index)
 
 Vector *V_addLast(Vector *v, float value)
 {
-    _Node *n = malloc(sizeof(_Node));
+    _Node *n = (_Node *)malloc(sizeof(_Node));
 
     n->f_value = value;
     n->next = NULL;
@@ -327,13 +329,13 @@ Vector *V_remove(Vector *v, int index)
 
 SortedVector *newSortedVector(float value)
 {
-    _DNode *n = malloc(sizeof(_DNode));
+    _DNode *n = (_DNode *)malloc(sizeof(_DNode));
 
     n->f_value = value;
     n->next = NULL;
     n->prev = NULL;
 
-    SortedVector *v = malloc(sizeof(SortedVector));
+    SortedVector *v = (SortedVector *)malloc(sizeof(SortedVector));
 
     v->first = n;
     v->last = n;
@@ -342,7 +344,7 @@ SortedVector *newSortedVector(float value)
 
 SortedVector *SV_add(SortedVector *v, float value)
 {
-    _DNode *n = malloc(sizeof(_DNode));
+    _DNode *n = (_DNode *)malloc(sizeof(_DNode));
 
     n->f_value = value;
     n->next = NULL;
@@ -463,7 +465,7 @@ SortedVector *SV_remove(SortedVector *v, int index)
 
 Vector3 *newVector3(float x, float y, float z)
 {
-    Vector3 *v = malloc(sizeof(Vector3));
+    Vector3 *v = (Vector3 *)malloc(sizeof(Vector3));
 
     v->x = x;
     v->y = y;
@@ -545,17 +547,17 @@ float QV3_magnitude(const Vector3 *v)
     return y;
 }
 
-Vector3 *V3_negate(const Vector3 *v)
+Vector3 *V3_negate(Vector3 *v)
 {
     return V3_multiply(v, -1);
 }
 
-Vector3 *V3_normalize(const Vector3 *v)
+Vector3 *V3_normalize(Vector3 *v)
 {
     return V3_divide(v, V3_magnitude(v));
 }
 
-Vector3 *QV3_normalize(const Vector3 *v)
+Vector3 *QV3_normalize(Vector3 *v)
 {
     return QV3_divide(v, QV3_magnitude(v));
 }
@@ -608,7 +610,7 @@ Point *P_assign(Point *p, float x, float y, float z)
 
 Vector3 *P_subtractDontSave(const Point *a, const Point *b)
 {
-    Vector3 *v = malloc(sizeof(Vector3));
+    Vector3 *v = (Vector3 *)malloc(sizeof(Vector3));
 
     v->x = a->x - b->x;
     v->y = a->y - b->y;
@@ -665,11 +667,6 @@ float Q_sqrt(const float number)
 float Q_rsqrt(float number)
 {
     return Q_inverse(Q_sqrt(number));
-}
-
-void *displayVector3()
-{
-    return "Vector3 is: < %f, %f, %f >";
 }
 
 #endif
